@@ -50,16 +50,9 @@
                     a(href=`${prefixAdmin}/comments`)
                         i.fas.fa-comments
                         span Quản lý bình luận
-            
+
             if(role.permissions.includes('setting'))
                 li 
                     a(href=`${prefixAdmin}/setting/general`)
                         i.fas.fa-cog
                         span Cài đặt chung
-
-            if(role.permissions.includes('setting'))
-                li 
-                    a(href=`${prefixAdmin}/cache`)
-                        i.fas.fa-memory
-                        span Quản lý Cache
-

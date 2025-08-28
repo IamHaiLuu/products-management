@@ -12,9 +12,6 @@ import { searchProducts } from "../../helpers/fuzzySearch.js";
 import paginationHelper from "../../helpers/pagination.js";
 import { createTree } from "../../helpers/createTree.js";
 import cloudinaryHelper from "../../helpers/uploadToCloudinary.js";
-import CacheService from '../../services/cache.service.js';
-import cacheHelper from '../../helpers/cache.js';
-import CacheInvalidation from '../../helpers/cacheInvalidation.js';
 
 const { deleteFromCloudinary } = cloudinaryHelper;
 
@@ -163,15 +160,9 @@ export async function changeStatus(req, res) {
     const status = req.params.status
     const id = req.params.id
 
-    // Lấy thông tin product trước khi update để invalidate cache
     const product = await Product.findById(id);
     
     await Product.updateOne({ _id: id }, { status: status, $push: { updatedBy: update } })
-
-    // Invalidate cache liên quan đến product này
-    if (product) {
-        await CacheInvalidation.invalidateProductCaches(id, product.slug);
-    }
 
     req.flash('success', 'Cập nhật trạng thái thành công!');
 
@@ -203,8 +194,6 @@ export async function changeMulti(req, res) {
                 $push: { updatedBy: update }
             })
             
-            // Invalidate cache cho bulk changes
-            await CacheInvalidation.invalidateAdminBulkChanges();
             
             req.flash('success', `Cập nhật trạng thái của ${ids.length} sản phẩm thành công!`);
             break
@@ -221,8 +210,6 @@ export async function changeMulti(req, res) {
                 $push: { updatedBy: update }
             })
             
-            // Invalidate cache cho bulk changes
-            await CacheInvalidation.invalidateAdminBulkChanges();
             
             req.flash('success', `Cập nhật trạng thái của ${ids.length} sản phẩm thành công!`);
             break
@@ -245,8 +232,6 @@ export async function changeMulti(req, res) {
                 }
             )
             
-            // Invalidate cache cho bulk changes
-            await CacheInvalidation.invalidateAdminBulkChanges();
             
             req.flash('success', `Đã xóa thành công ${ids.length} sản phẩm thành công!`);
             break

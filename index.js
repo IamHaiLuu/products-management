@@ -18,16 +18,12 @@ config()
 
 await import('./config/passport.js');
 import { cleanupExpiredTokens } from './helpers/tokenCleanup.js'
-import cacheCleanup from './helpers/cacheCleanup.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
 import { mongooseConnect } from './config/database.js'
 await mongooseConnect();
-
-import { connectRedis } from './config/redis.js'
-await connectRedis();
 
 const { prefixAdmin } = await import('./config/system.js');
 

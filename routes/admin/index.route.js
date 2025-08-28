@@ -14,7 +14,6 @@ import settingRoute from './setting.route.js'
 import userRoute from './user.route.js'
 import commentRoute from './comment.route.js'
 import tokenRoute from './token.route.js'
-import cacheRoute from './cache.route.js'
 
 import { login } from '../../controllers/admin/auth.controller.js'
 
@@ -46,6 +45,4 @@ export default (app) => {
     app.use(PATH_ADMIN + '/comments', reuireAuth, commentRoute)
     
     app.use(PATH_ADMIN + '/token', tokenRoute)
-    
-    app.use(PATH_ADMIN + '/cache', reuireAuth, cacheRoute)
 }
