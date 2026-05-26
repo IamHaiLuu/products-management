@@ -18,7 +18,7 @@ const isValidLength = (str, min = 1, max = 255) => {
     return str && str.length >= min && str.length <= max
 }
 
-// Rate limiting tracker (in production, use Redis)
+// Rate limiting tracker
 const rateLimitTracker = new Map()
 
 const checkRateLimit = (ip, maxAttempts = 5, windowMs = 15 * 60 * 1000) => {

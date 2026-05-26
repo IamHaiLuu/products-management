@@ -357,7 +357,7 @@ export const validateRequestBody = (body, allowedFields = [], maxFields = 20) =>
  * @returns {boolean}
  */
 export const checkRateLimit = (key, limit = 5, windowMs = 60000) => {
-    // Simple in-memory rate limiting (trong production nên dùng Redis)
+    // Simple in-memory rate limiting
     if (!global.rateLimitStore) {
         global.rateLimitStore = new Map();
     }

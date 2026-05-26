@@ -9,12 +9,17 @@ import moment from 'moment'
 import { createServer } from 'http'
 import { Server } from "socket.io"
 import cors from 'cors'
+import dns from 'dns'
 import { dirname } from 'path'
 import { fileURLToPath } from 'url'
 import passport from 'passport';
 
 import { config } from 'dotenv'
 config()
+
+if (process.env.NODE_ENV === 'dev') {
+    dns.setServers(['8.8.8.8', '1.1.1.1']);
+}
 
 await import('./config/passport.js');
 import { cleanupExpiredTokens } from './helpers/tokenCleanup.js'
